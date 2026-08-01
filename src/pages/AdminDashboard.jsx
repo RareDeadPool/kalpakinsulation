@@ -485,11 +485,11 @@ const AdminDashboard = () => {
               <p className="text-sm text-gray-500">Loading certificates...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
+            <div className="overflow-x-auto max-w-full">
+              <Table className="w-full min-w-[700px]">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Certificate Code</TableHead>
+                    <TableHead className="w-[180px]">Certificate Code</TableHead>
                     <TableHead>Intern Name</TableHead>
                     <TableHead>Domain</TableHead>
                     <TableHead>Duration / Dates</TableHead>
@@ -508,12 +508,12 @@ const AdminDashboard = () => {
                   ) : (
                     filteredCertificates.map((cert) => (
                       <TableRow key={cert.id} className="hover:bg-gray-50/80 transition-colors">
-                        <TableCell className="font-mono font-bold text-xs text-amber-900 bg-amber-50/50 px-3 py-2 rounded border border-amber-200/40">
+                        <TableCell className="font-mono font-bold text-xs text-amber-900 bg-amber-50/50 px-3 py-2 rounded border border-amber-200/40 whitespace-nowrap">
                           {cert.certificateCode}
                         </TableCell>
-                        <TableCell className="font-semibold text-gray-900">{cert.internName}</TableCell>
-                        <TableCell className="text-xs text-gray-600 max-w-[200px] truncate">{cert.domain}</TableCell>
-                        <TableCell className="text-xs text-gray-500">
+                        <TableCell className="font-semibold text-gray-900 whitespace-nowrap">{cert.internName}</TableCell>
+                        <TableCell className="text-xs text-gray-600 max-w-[180px] truncate">{cert.domain}</TableCell>
+                        <TableCell className="text-xs text-gray-500 whitespace-nowrap">
                           <div>{cert.duration || '3 Months'}</div>
                           <div className="text-[11px] text-gray-400">{cert.startDate} to {cert.endDate}</div>
                         </TableCell>
@@ -527,7 +527,7 @@ const AdminDashboard = () => {
                             {cert.status || 'Valid'}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right whitespace-nowrap">
                           <div className="flex justify-end gap-1.5">
                             <Button 
                               variant="ghost" 
@@ -592,25 +592,25 @@ const AdminDashboard = () => {
         <CardHeader className="pb-4">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <CardTitle className="text-lg font-semibold">All Projects</CardTitle>
-            <div className="flex gap-2">
-              <div className="relative">
+            <div className="flex gap-2 w-full sm:w-auto">
+              <div className="relative flex-1 sm:w-64">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="Search projects..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-9 w-64"
+                  className="pl-9 w-full"
                 />
               </div>
-                <Button variant="outline" size="sm">
-                  Filter
-                </Button>
+              <Button variant="outline" size="sm">
+                Filter
+              </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
+          <div className="overflow-x-auto max-w-full">
+            <Table className="w-full min-w-[650px]">
               <TableHeader>
                 <TableRow>
                   <TableHead>Project</TableHead>
@@ -625,21 +625,21 @@ const AdminDashboard = () => {
               <TableBody>
                 {projects.map((project) => (
                   <TableRow key={project.id}>
-                    <TableCell className="font-medium">{project.title}</TableCell>
-                    <TableCell>{project.client}</TableCell>
-                    <TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">{project.title}</TableCell>
+                    <TableCell className="whitespace-nowrap">{project.client}</TableCell>
+                    <TableCell className="whitespace-nowrap">
                       <Badge variant="outline" className="text-xs">
                         {project.category}
                       </Badge>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="whitespace-nowrap">
                       <Badge variant="outline" className={getStatusColor(project.status)}>
                         {project.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="font-medium">{project.value}</TableCell>
-                    <TableCell className="text-muted-foreground">{project.date}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="font-medium whitespace-nowrap">{project.value}</TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">{project.date}</TableCell>
+                    <TableCell className="text-right whitespace-nowrap">
                       <div className="flex justify-end gap-2">
                         <Button variant="ghost" size="sm">
                           <Eye className="w-4 h-4" />
@@ -895,77 +895,85 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col max-w-full overflow-x-hidden">
       {/* Header */}
-      <header className="bg-primary border-b border-gray-200 shadow-sm">
-        <div className="flex items-center justify-between h-16 px-6">
-          <div className="flex items-center gap-4">
+      <header className="bg-primary border-b border-gray-200 shadow-sm sticky top-0 z-40">
+        <div className="flex items-center justify-between h-16 px-4 sm:px-6">
+          <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden text-primary-foreground hover:bg-primary-darker"
+              className="lg:hidden text-primary-foreground hover:bg-primary-darker p-2"
             >
               <Menu className="w-5 h-5" />
             </Button>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-primary-foreground rounded-lg flex items-center justify-center">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-primary-foreground rounded-lg flex items-center justify-center flex-shrink-0">
                 <Building className="w-5 h-5 text-primary" />
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-primary-foreground">Kalpak Insulation</h1>
-                <p className="text-xs text-primary-foreground/80">Admin Dashboard</p>
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-xl font-bold text-primary-foreground truncate">Kalpak Insulation</h1>
+                <p className="text-[11px] sm:text-xs text-primary-foreground/80 hidden xs:block">Admin Dashboard</p>
               </div>
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <Badge variant="outline" className="bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Badge variant="outline" className="hidden sm:inline-flex bg-primary-foreground/10 text-primary-foreground border-primary-foreground/20">
               Admin Panel
             </Badge>
             <Button
               variant="ghost"
               size="sm"
-              className="text-primary-foreground hover:bg-primary-darker"
+              className="text-primary-foreground hover:bg-primary-darker px-2 sm:px-3 text-xs sm:text-sm"
             >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              <LogOut className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline">Logout</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex flex-1 relative min-w-0">
         {/* Sidebar */}
         <aside
           className={`${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } fixed lg:static lg:translate-x-0 z-30 w-64 h-full bg-white border-r border-gray-200 shadow-lg transition-transform duration-300 ease-in-out`}
+          } fixed lg:static top-0 left-0 inset-y-0 lg:translate-x-0 z-50 w-64 bg-white border-r border-gray-200 shadow-lg lg:shadow-none transition-transform duration-300 ease-in-out flex flex-col justify-between`}
         >
-          <nav className="p-4 space-y-2">
-            {sidebarItems.map((item) => (
-              <Button
-                key={item.id}
-                variant={selectedTab === item.id ? "default" : "ghost"}
-                className={`w-full justify-start h-11 ${
-                  selectedTab === item.id
-                    ? "bg-primary text-primary-foreground hover:bg-primary-darker"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-                onClick={() => {
-                  setSelectedTab(item.id);
-                  setSidebarOpen(false);
-                }}
-              >
-                <item.icon className="w-5 h-5 mr-3" />
-                {item.label}
+          <div className="p-4 lg:pt-6">
+            <div className="flex items-center justify-between lg:hidden mb-4 pb-3 border-b">
+              <span className="font-bold text-gray-800 text-sm">Navigation Menu</span>
+              <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(false)} className="p-1">
+                <X className="w-5 h-5 text-gray-500" />
               </Button>
-            ))}
-          </nav>
+            </div>
+            <nav className="space-y-1.5">
+              {sidebarItems.map((item) => (
+                <Button
+                  key={item.id}
+                  variant={selectedTab === item.id ? "default" : "ghost"}
+                  className={`w-full justify-start h-10 text-sm ${
+                    selectedTab === item.id
+                      ? "bg-primary text-primary-foreground hover:bg-primary-darker font-semibold"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                  onClick={() => {
+                    setSelectedTab(item.id);
+                    setSidebarOpen(false);
+                  }}
+                >
+                  <item.icon className="w-4 h-4 mr-3 flex-shrink-0" />
+                  {item.label}
+                </Button>
+              ))}
+            </nav>
+          </div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 lg:p-8">
+        <main className="flex-1 min-w-0 w-full p-4 sm:p-6 lg:p-8 overflow-x-hidden">
           {renderContent()}
         </main>
       </div>
@@ -973,7 +981,7 @@ const AdminDashboard = () => {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-20 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
