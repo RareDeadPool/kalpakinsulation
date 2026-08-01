@@ -35,11 +35,11 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-gray-900 text-white">
-        <div className="container mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
             {/* Company Info */}
             <div>
-              <div className="flex items-center space-x-3 mb-6" onClick={handleAdminLogoClick}>
+              <div className="flex items-center space-x-3 mb-4 sm:mb-6 cursor-pointer" onClick={handleAdminLogoClick}>
                 <div className="relative">
                   <Logo size="default" className="text-white" />
                   {adminClickCount > 0 && (
@@ -49,46 +49,46 @@ const Footer = () => {
                   )}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">KALPAK INSULATION</h3>
-                  <p className="text-gray-400 text-sm">Professional Solutions</p>
+                  <h3 className="text-lg sm:text-xl font-bold">KALPAK INSULATION</h3>
+                  <p className="text-gray-400 text-xs sm:text-sm">Professional Solutions</p>
                 </div>
               </div>
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <p className="text-gray-300 mb-4 sm:mb-6 text-sm leading-relaxed">
                 Leading provider of thermal insulation, cold insulation, and scaffolding services in Maharashtra, India.
                 Committed to excellence and customer satisfaction.
               </p>
-              <div className="flex space-x-4">
+              <div className="flex space-x-3">
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
+                  className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
                 >
-                  <Facebook size={18} />
+                  <Facebook size={16} />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
+                  className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
                 >
-                  <Twitter size={18} />
+                  <Twitter size={16} />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
+                  className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
                 >
-                  <Linkedin size={18} />
+                  <Linkedin size={16} />
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
+                  className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-600 transition-colors"
                 >
-                  <Instagram size={18} />
+                  <Instagram size={16} />
                 </a>
               </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
-              <ul className="space-y-3">
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Quick Links</h4>
+              <ul className="space-y-2.5 text-sm">
                 <li>
                   <Link to="/" className="text-gray-300 hover:text-primary-400 transition-colors">
                     Home
@@ -110,7 +110,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/verify-certificate" className="text-gray-300 hover:text-primary-400 transition-colors">
+                  <Link to="/verify-certificate" className="text-gray-300 hover:text-primary-400 transition-colors font-medium text-red-400">
                     Verify Certificate
                   </Link>
                 </li>
@@ -124,23 +124,23 @@ const Footer = () => {
 
             {/* Services */}
             <div>
-              <h4 className="text-lg font-semibold mb-6">Our Services</h4>
-              <ul className="space-y-3">
-                <li className="text-gray-300">Thermal Insulation</li>
-                <li className="text-gray-300">Cold Insulation</li>
-                <li className="text-gray-300">Scaffolding Services</li>
-                <li className="text-gray-300">Industrial Solutions</li>
-                <li className="text-gray-300">Maintenance Services</li>
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Our Services</h4>
+              <ul className="space-y-2.5 text-sm text-gray-300">
+                <li>Thermal Insulation</li>
+                <li>Cold Insulation</li>
+                <li>Scaffolding Services</li>
+                <li>Industrial Solutions</li>
+                <li>Maintenance Services</li>
               </ul>
             </div>
 
             {/* Contact Info */}
             <div>
-              <h4 className="text-lg font-semibold mb-6">Contact Info</h4>
-              <div className="space-y-4">
+              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6">Contact Info</h4>
+              <div className="space-y-3 sm:space-y-4 text-sm">
                 <div className="flex items-start space-x-3">
                   <MapPin size={18} className="text-primary-400 mt-1 flex-shrink-0" />
-                  <p className="text-gray-300 text-sm leading-relaxed">
+                  <p className="text-gray-300 leading-relaxed text-xs sm:text-sm">
                     Malhar Palace No. 1, Flat no. 403,
                     <br />
                     Opp. Kasturi plaza, Manpada Road,
@@ -149,26 +149,26 @@ const Footer = () => {
                   </p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Phone size={18} className="text-primary-400" />
-                  <div className="text-gray-300 text-sm">
+                  <Phone size={18} className="text-primary-400 flex-shrink-0" />
+                  <div className="text-gray-300 text-xs sm:text-sm">
                     <p>+91 97256 32918</p>
                     <p>+91 98696 03709</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Mail size={18} className="text-primary-400" />
-                  <p className="text-gray-300 text-sm">info@kalpakinsulation.com</p>
+                  <Mail size={18} className="text-primary-400 flex-shrink-0" />
+                  <p className="text-gray-300 text-xs sm:text-sm truncate">info@kalpakinsulation.com</p>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Clock size={18} className="text-primary-400" />
-                  <p className="text-gray-300 text-sm">Mon - Sat: 9:00 AM - 6:00 PM</p>
+                  <Clock size={18} className="text-primary-400 flex-shrink-0" />
+                  <p className="text-gray-300 text-xs sm:text-sm">Mon - Sat: 9:00 AM - 6:00 PM</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p className="text-gray-400 text-sm">
+          <div className="border-t border-gray-800 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center">
+            <p className="text-gray-400 text-xs sm:text-sm">
               © 2024 Kalpak Insulation. All rights reserved. | Professional insulation solutions you can trust.
             </p>
           </div>

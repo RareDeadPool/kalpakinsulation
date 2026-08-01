@@ -64,9 +64,9 @@ const Projects = () => {
       {/* Hero Section */}
       <section className="gradient-primary text-white section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 fade-in">Our Project Portfolio</h1>
-          <p className="text-xl max-w-4xl mx-auto leading-relaxed fade-in stagger-2">
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 fade-in">Our Project Portfolio</h1>
+          <p className="text-base sm:text-xl max-w-4xl mx-auto leading-relaxed fade-in stagger-2">
             Explore our portfolio of successful insulation and scaffolding projects across Maharashtra. Each project
             showcases our commitment to quality, safety, and customer satisfaction.
           </p>
@@ -74,9 +74,9 @@ const Projects = () => {
       </section>
 
       {/* Filter and Search Section */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
+      <section className="py-8 sm:py-12 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 items-stretch lg:items-center justify-between">
             {/* Search */}
             <div className="relative flex-1 max-w-md fade-in">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -85,17 +85,17 @@ const Projects = () => {
                 placeholder="Search projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm sm:text-base"
               />
             </div>
 
             {/* Filter Buttons */}
-            <div className="flex flex-wrap gap-4 fade-in stagger-2">
+            <div className="flex flex-wrap gap-2 sm:gap-4 fade-in stagger-2">
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setActiveFilter(category.id)}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover-lift ${
+                  className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 hover-lift ${
                     activeFilter === category.id
                       ? "bg-primary-600 text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-primary-50 hover:text-primary-600 border border-gray-200"
@@ -111,8 +111,8 @@ const Projects = () => {
 
       {/* Projects Grid */}
       <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredProjects.map((project, index) => (
               <div
                 key={project.id}
@@ -122,7 +122,7 @@ const Projects = () => {
                   <img
                     src={project.image || "/placeholder.svg"}
                     alt={project.name}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="w-full h-48 sm:h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-primary-600 text-white rounded-full text-sm font-semibold capitalize">
@@ -177,15 +177,15 @@ const Projects = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-gray-800 text-white">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-10 fade-in">Our Achievements</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="py-10 sm:py-16 bg-gray-800 text-white">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-4xl font-bold mb-8 sm:mb-12 fade-in">Our Achievements</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((stat, index) => (
               <div key={index} className={`flex flex-col items-center fade-in stagger-${index + 1}`}>
-                <span className="text-5xl mb-3">{stat.icon}</span>
-                <p className="text-4xl font-bold text-primary-300">{stat.number}</p>
-                <p className="text-sm text-gray-300 uppercase tracking-wider">{stat.label}</p>
+                <span className="text-3xl sm:text-5xl mb-2 sm:mb-3">{stat.icon}</span>
+                <p className="text-2xl sm:text-4xl font-bold text-primary-300">{stat.number}</p>
+                <p className="text-xs sm:text-sm text-gray-300 uppercase tracking-wider mt-1">{stat.label}</p>
               </div>
             ))}
           </div>

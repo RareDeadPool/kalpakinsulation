@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, serverTimestamp, setDoc, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 
 // Services Collection
@@ -83,11 +83,12 @@ export const getCompanyInfo = async () => {
   }
 };
 
-// Testimonials Collection
+// Testimonials Collection — only returns admin-approved reviews
 export const getTestimonials = async () => {
   try {
     const testimonialsCollection = collection(db, 'testimonials');
-    const testimonialsSnapshot = await getDocs(testimonialsCollection);
+    const q = query(testimonialsCollection, where('approved', '==', true));
+    const testimonialsSnapshot = await getDocs(q);
     return testimonialsSnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
@@ -95,6 +96,56 @@ export const getTestimonials = async () => {
   } catch (error) {
     console.error('Error fetching testimonials:', error);
     return [];
+  }
+};
+
+// Fetch all pending (unapproved) reviews for admin moderation
+export const getPendingReviews = async () => {
+  try {
+    const testimonialsCollection = collection(db, 'testimonials');
+    const q = query(testimonialsCollection, where('approved', '==', false));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (error) {
+    console.error('Error fetching pending reviews:', error);
+    return [];
+  }
+};
+
+// Fetch all approved reviews for admin panel view
+export const getApprovedReviews = async () => {
+  try {
+    const testimonialsCollection = collection(db, 'testimonials');
+    const q = query(testimonialsCollection, where('approved', '==', true));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (error) {
+    console.error('Error fetching approved reviews:', error);
+    return [];
+  }
+};
+
+// Approve a review — sets approved: true
+export const approveReview = async (id) => {
+  try {
+    const reviewRef = doc(db, 'testimonials', id);
+    await updateDoc(reviewRef, { approved: true, approvedAt: serverTimestamp() });
+    return true;
+  } catch (error) {
+    console.error('Error approving review:', error);
+    throw error;
+  }
+};
+
+// Reject / delete a review permanently
+export const rejectReview = async (id) => {
+  try {
+    const reviewRef = doc(db, 'testimonials', id);
+    await deleteDoc(reviewRef);
+    return true;
+  } catch (error) {
+    console.error('Error rejecting review:', error);
+    throw error;
   }
 };
 

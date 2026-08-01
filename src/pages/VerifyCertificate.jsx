@@ -98,19 +98,21 @@ const VerifyCertificate = () => {
         </p>
 
         <form onSubmit={handleFormSubmit} className="mt-7">
-          <div className="relative flex items-center max-w-xl mx-auto">
-            <Search className="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none" />
-            <input
-              type="text"
-              value={inputCode}
-              onChange={(e) => setInputCode(e.target.value.toUpperCase())}
-              placeholder="e.g. KALPAK-INT-2024-001"
-              className="w-full pl-12 pr-36 py-4 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all uppercase tracking-wider text-sm font-medium shadow-sm"
-            />
+          <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center max-w-xl mx-auto gap-2 sm:gap-0">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+              <input
+                type="text"
+                value={inputCode}
+                onChange={(e) => setInputCode(e.target.value.toUpperCase())}
+                placeholder="e.g. KALPAK-INT-2024-001"
+                className="w-full pl-12 pr-4 sm:pr-36 py-3.5 sm:py-4 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all uppercase tracking-wider text-xs sm:text-sm font-medium shadow-sm"
+              />
+            </div>
             <button
               type="submit"
               disabled={loading}
-              className="absolute right-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition-all text-sm disabled:opacity-50 flex items-center gap-2"
+              className="sm:absolute sm:right-2 px-5 py-3 sm:py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition-all text-sm disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -124,7 +126,7 @@ const VerifyCertificate = () => {
 
       {/* ── Loading ── */}
       {loading && (
-        <div className="max-w-xl mx-auto bg-white rounded-2xl border border-gray-200 p-12 text-center shadow">
+        <div className="max-w-xl mx-auto bg-white rounded-2xl border border-gray-200 p-8 sm:p-12 text-center shadow">
           <div className="w-10 h-10 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-gray-500 text-sm">Checking certificate database…</p>
         </div>
@@ -168,38 +170,37 @@ const VerifyCertificate = () => {
             style={{ fontFamily: "'Segoe UI', Arial, sans-serif" }}
           >
             {/* ── RED HEADER BANNER ── */}
-            <div className="flex items-center bg-red-600 px-6 py-4 gap-4">
+            <div className="flex items-center bg-red-600 px-4 sm:px-6 py-3.5 sm:py-4 gap-3 sm:gap-4">
               {/* White square icon holder */}
-              <div className="bg-white rounded-sm flex items-center justify-center p-2 flex-shrink-0" style={{ width: 52, height: 52 }}>
+              <div className="bg-white rounded-sm flex items-center justify-center p-1.5 sm:p-2 flex-shrink-0 w-10 h-10 sm:w-[52px] sm:h-[52px]">
                 <Logo size="small" />
               </div>
               <span
-                className="text-white font-black tracking-wide leading-none"
-                style={{ fontSize: "1.75rem", letterSpacing: "0.04em" }}
+                className="text-white font-black tracking-wide leading-none text-xl sm:text-3xl"
+                style={{ letterSpacing: "0.04em" }}
               >
                 KALPAK INSULATION
               </span>
             </div>
 
             {/* ── WHITE BODY ── */}
-            <div className="px-10 pt-10 pb-6">
+            <div className="px-5 sm:px-10 pt-6 sm:pt-10 pb-6">
               {/* Title */}
               <h2
-                className="font-black text-gray-900 leading-tight mb-6"
-                style={{ fontSize: "2rem", letterSpacing: "0.02em" }}
+                className="font-black text-gray-900 leading-tight mb-4 sm:mb-6 text-xl sm:text-3xl"
+                style={{ letterSpacing: "0.02em" }}
               >
                 CERTIFICATE OF INTERNSHIP
               </h2>
 
               {/* Date */}
-              <div className="text-right text-sm font-bold text-gray-800 mb-10">
+              <div className="text-right text-xs sm:text-sm font-bold text-gray-800 mb-6 sm:mb-10">
                 Date&nbsp;:&nbsp;{formatDate(certificate.issueDate)}
               </div>
 
               {/* Body Paragraphs */}
               <div
-                className="text-gray-800 leading-relaxed space-y-5"
-                style={{ fontSize: "0.95rem" }}
+                className="text-gray-800 leading-relaxed space-y-4 sm:space-y-5 text-xs sm:text-sm"
               >
                 {/* Para 1 – certification statement */}
                 <p>
@@ -247,29 +248,29 @@ const VerifyCertificate = () => {
               </div>
 
               {/* Sign-off — signature withheld online */}
-              <div className="mt-10">
-                <p className="text-gray-700 text-sm mb-8">Sincerely,</p>
+              <div className="mt-8 sm:mt-10">
+                <p className="text-gray-700 text-xs sm:text-sm mb-6 sm:mb-8">Sincerely,</p>
                 {/* ↑ blank space where physical signature would be */}
-                <p className="font-extrabold text-red-600 text-base">
+                <p className="font-extrabold text-red-600 text-sm sm:text-base">
                   Mr. Sudhir Sawant
                 </p>
-                <p className="text-gray-700 text-sm">Proprietor</p>
+                <p className="text-gray-700 text-xs sm:text-sm">Proprietor</p>
               </div>
             </div>
 
             {/* ── FOOTER CONTACT STRIP ── */}
-            <div className="bg-gray-50 border-t border-gray-200 px-10 py-4">
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-xs text-gray-600">
+            <div className="bg-gray-50 border-t border-gray-200 px-5 sm:px-10 py-4">
+              <div className="flex flex-wrap items-center gap-x-6 sm:gap-x-8 gap-y-2 text-[11px] sm:text-xs text-gray-600">
                 <span className="flex items-center gap-1.5">
-                  <Phone className="w-3.5 h-3.5 text-red-600" />
+                  <Phone className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
                   +91 95944 09122
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-red-600" />
+                  <Mail className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
                   kalpakinsulation@gmail.com
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-red-600" />
+                  <MapPin className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
                   403, Malhar Palace No.1, Manpada Rd, Dombivli
                 </span>
               </div>

@@ -48,6 +48,13 @@ import {
   deleteCertificate as deleteCertFirebase 
 } from "../services/firebase";
 
+import {
+  getPendingReviews,
+  getApprovedReviews,
+  approveReview,
+  rejectReview,
+} from "../services/dbServices";
+
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState("dashboard");
@@ -90,7 +97,30 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchCertificates();
+    fetchReviews();
   }, []);
+
+  // Reviews State (Firestore-backed)
+  const [pendingReviews, setPendingReviews] = useState([]);
+  const [approvedReviews, setApprovedReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(false);
+
+  // Fetch reviews from Firestore
+  const fetchReviews = async () => {
+    setLoadingReviews(true);
+    try {
+      const [pending, approved] = await Promise.all([
+        getPendingReviews(),
+        getApprovedReviews(),
+      ]);
+      setPendingReviews(pending);
+      setApprovedReviews(approved);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
 
   // Dashboard Summary Data
   const dashboardData = {
@@ -99,8 +129,8 @@ const AdminDashboard = () => {
     totalProjects: 15,
     totalVisitors: 1247,
     totalCertificates: certificates.length,
-    pendingReviews: 3,
-    approvedReviews: 24,
+    pendingReviews: pendingReviews.length,
+    approvedReviews: approvedReviews.length,
     monthlyGrowth: 12.5,
     completedProjects: 142,
   };
@@ -165,26 +195,7 @@ const AdminDashboard = () => {
     }
   ]);
 
-  const [reviews] = useState([
-    {
-      id: 1,
-      customerName: "Amit Patel",
-      rating: 5,
-      comment: "Excellent thermal insulation work. Very professional team and timely completion.",
-      projectType: "Thermal Insulation",
-      date: "2024-01-25",
-      status: "pending",
-    },
-    {
-      id: 2,
-      customerName: "Sunita Desai",
-      rating: 4,
-      comment: "Good quality scaffolding services. Reliable and safe.",
-      projectType: "Scaffolding",
-      date: "2024-01-28",
-      status: "approved",
-    }
-  ]);
+
 
   const sidebarItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -714,117 +725,153 @@ const AdminDashboard = () => {
     </div>
   );
 
+  const handleApproveReview = async (id) => {
+    try {
+      await approveReview(id);
+      toast.success("Review approved and published!");
+      fetchReviews();
+    } catch (err) {
+      toast.error("Failed to approve review.");
+    }
+  };
+
+  const handleRejectReview = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this review? This cannot be undone.")) return;
+    try {
+      await rejectReview(id);
+      toast.success("Review deleted.");
+      fetchReviews();
+    } catch (err) {
+      toast.error("Failed to reject review.");
+    }
+  };
+
+  const ReviewCard = ({ review, isPending }) => {
+    const name = review.name || review.customerName || "Anonymous";
+    const content = review.content || review.comment || "";
+    const company = review.company || review.projectType || "";
+    const submittedAt = review.timestamp?.toDate?.()
+      ? review.timestamp.toDate().toLocaleDateString("en-IN")
+      : review.date || "—";
+
+    return (
+      <Card className={`border ${isPending ? "border-orange-200 bg-orange-50/30" : "border-green-200 bg-green-50/30"}`}>
+        <CardContent className="p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 mb-3">
+                <Avatar className="h-10 w-10 flex-shrink-0">
+                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-bold">
+                    {name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h4 className="font-semibold text-gray-900">{name}</h4>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${i < (review.rating || 0) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+                        />
+                      ))}
+                    </div>
+                    {company && <span className="text-sm text-muted-foreground">• {company}</span>}
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-700 mb-3 leading-relaxed">{content}</p>
+              {review.email && (
+                <p className="text-xs text-muted-foreground mb-1">Email: {review.email}</p>
+              )}
+              <p className="text-xs text-muted-foreground">
+                {isPending ? "Submitted" : "Approved"} on {submittedAt}
+              </p>
+            </div>
+            {!isPending && (
+              <Badge variant="outline" className="bg-green-100 text-green-800 border-green-300 flex-shrink-0">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Approved
+              </Badge>
+            )}
+          </div>
+          {isPending && (
+            <div className="flex gap-3 mt-4 pt-4 border-t border-orange-200">
+              <Button
+                className="bg-green-600 hover:bg-green-700 text-white"
+                onClick={() => handleApproveReview(review.id)}
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Approve & Publish
+              </Button>
+              <Button
+                variant="outline"
+                className="border-red-200 text-red-600 hover:bg-red-50"
+                onClick={() => handleRejectReview(review.id)}
+              >
+                <X className="w-4 h-4 mr-2" />
+                Delete
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  };
+
   const renderReviews = () => (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Reviews Management</h2>
-          <p className="text-muted-foreground">Approve and manage customer reviews</p>
+          <p className="text-muted-foreground">Approve and manage customer reviews before they appear publicly</p>
         </div>
         <div className="flex gap-2">
           <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
-            {reviews.filter(r => r.status === "pending").length} Pending
+            {pendingReviews.length} Pending
           </Badge>
           <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-            {reviews.filter(r => r.status === "approved").length} Approved
+            {approvedReviews.length} Approved
           </Badge>
+          <Button variant="outline" size="sm" onClick={fetchReviews} disabled={loadingReviews}>
+            {loadingReviews ? "Loading..." : "Refresh"}
+          </Button>
         </div>
       </div>
 
       <Tabs defaultValue="pending" className="space-y-4">
         <TabsList className="grid w-full max-w-md grid-cols-2">
-          <TabsTrigger value="pending">Pending Reviews</TabsTrigger>
-          <TabsTrigger value="approved">Approved Reviews</TabsTrigger>
+          <TabsTrigger value="pending">Pending Reviews ({pendingReviews.length})</TabsTrigger>
+          <TabsTrigger value="approved">Approved ({approvedReviews.length})</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="pending" className="space-y-4">
-          {reviews.filter(r => r.status === "pending").map((review) => (
-            <Card key={review.id} className="border border-orange-200 bg-orange-50/30">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarFallback className="bg-primary/10 text-primary">
-                          {review.customerName.split(" ").map(n => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h4 className="font-semibold">{review.customerName}</h4>
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-4 h-4 ${
-                                  i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-sm text-muted-foreground">• {review.projectType}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">{review.comment}</p>
-                    <p className="text-xs text-muted-foreground">Submitted on {review.date}</p>
-                  </div>
-                </div>
-                <div className="flex gap-3 mt-4 pt-4 border-t border-orange-200">
-                  <Button className="bg-green-600 hover:bg-green-700 text-white">
-                    <CheckCircle className="w-4 h-4 mr-2" />
-                    Approve Review
-                  </Button>
-                  <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
-                    <X className="w-4 h-4 mr-2" />
-                    Reject
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+          {loadingReviews ? (
+            <div className="text-center py-12 text-muted-foreground">Loading reviews...</div>
+          ) : pendingReviews.length === 0 ? (
+            <div className="text-center py-12 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+              <CheckCircle className="w-10 h-10 text-green-400 mx-auto mb-3" />
+              <p className="text-gray-500 font-medium">No pending reviews — you're all caught up!</p>
+            </div>
+          ) : (
+            pendingReviews.map((review) => (
+              <ReviewCard key={review.id} review={review} isPending={true} />
+            ))
+          )}
         </TabsContent>
-        
+
         <TabsContent value="approved" className="space-y-4">
-          {reviews.filter(r => r.status === "approved").map((review) => (
-            <Card key={review.id} className="border border-green-200 bg-green-50/30">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarFallback className="bg-primary/10 text-primary">
-                          {review.customerName.split(" ").map(n => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h4 className="font-semibold">{review.customerName}</h4>
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-4 h-4 ${
-                                  i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-sm text-muted-foreground">• {review.projectType}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 mb-4">{review.comment}</p>
-                    <p className="text-xs text-muted-foreground">Approved on {review.date}</p>
-                  </div>
-                  <Badge variant="outline" className="bg-green-100 text-green-800 border-green-300">
-                    <CheckCircle className="w-3 h-3 mr-1" />
-                    Approved
-                  </Badge>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+          {loadingReviews ? (
+            <div className="text-center py-12 text-muted-foreground">Loading reviews...</div>
+          ) : approvedReviews.length === 0 ? (
+            <div className="text-center py-12 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+              <p className="text-gray-500 font-medium">No approved reviews yet.</p>
+            </div>
+          ) : (
+            approvedReviews.map((review) => (
+              <ReviewCard key={review.id} review={review} isPending={false} />
+            ))
+          )}
         </TabsContent>
       </Tabs>
     </div>

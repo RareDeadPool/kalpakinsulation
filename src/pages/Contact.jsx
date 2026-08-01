@@ -226,9 +226,9 @@ const Contact = () => {
       {/* Hero Section */}
       <section className="gradient-primary text-white section-padding relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 fade-in">Contact Us</h1>
-          <p className="text-xl max-w-4xl mx-auto leading-relaxed fade-in stagger-2">
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 fade-in">Contact Us</h1>
+          <p className="text-base sm:text-xl max-w-4xl mx-auto leading-relaxed fade-in stagger-2">
             Ready to discuss your insulation or scaffolding project? Get in touch with our experts today for a free
             consultation and personalized quote.
           </p>
@@ -237,22 +237,22 @@ const Contact = () => {
 
       {/* Why Contact Us */}
       <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6 fade-in">Why Contact Us?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto fade-in stagger-2">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 fade-in">Why Contact Us?</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto fade-in stagger-2">
               Experience professional service and expert guidance for all your insulation needs.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             {whyContactUs.map((item, index) => (
-              <div key={index} className={`text-center card-professional p-8 hover-lift fade-in stagger-${index + 1}`}>
+              <div key={index} className={`text-center card-professional p-6 sm:p-8 hover-lift fade-in stagger-${index + 1}`}>
                 <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">{item.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
@@ -261,12 +261,12 @@ const Contact = () => {
 
       {/* Contact Form and Info */}
       <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Contact Form */}
             <div className="fade-in-left">
-              <h2 className="text-4xl font-bold text-gray-800 mb-8">Send Us a Message</h2>
-              <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+              <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-8">Send Us a Message</h2>
+              <p className="text-sm sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                 Fill out the form below and we'll get back to you within 24 hours with a detailed response to your
                 inquiry.
               </p>
@@ -432,8 +432,8 @@ const Contact = () => {
 
             {/* Contact Information */}
             <div className="fade-in-right">
-              <h2 className="text-4xl font-bold text-gray-800 mb-8">Get in Touch</h2>
-              <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+              <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-8">Get in Touch</h2>
+              <p className="text-sm sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                 We're here to help with all your insulation and scaffolding needs. Reach out to us through any of the
                 following channels.
               </p>
@@ -468,11 +468,11 @@ const Contact = () => {
               </div>
 
               {/* Quick Contact Buttons */}
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a
                   href="tel:+919725632918"
-                  className="btn-primary text-center flex items-center justify-center space-x-2 hover-lift"
-                  >
+                  className="btn-primary text-center flex items-center justify-center space-x-2 hover-lift py-3 text-sm sm:text-base"
+                >
                   <Phone className="w-5 h-5" />
                   <span>Call Now</span>
                 </a>
@@ -480,7 +480,7 @@ const Contact = () => {
                   href="https://wa.me/919725632918"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors duration-300 font-semibold text-center flex items-center justify-center space-x-2 hover-lift"
+                  className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors duration-300 font-semibold text-center flex items-center justify-center space-x-2 hover-lift text-sm sm:text-base"
                 >
                   <MessageSquare className="w-5 h-5" />
                   <span>WhatsApp</span>
@@ -493,19 +493,19 @@ const Contact = () => {
 
       {/* FAQ Section */}
       <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6 fade-in">Frequently Asked Questions</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto fade-in stagger-2">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 fade-in">Frequently Asked Questions</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto fade-in stagger-2">
               Quick answers to common questions about our services and processes.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index} className={`card-professional p-8 hover-lift fade-in stagger-${index + 1}`}>
-                <h3 className="text-lg font-bold text-gray-800 mb-4">{faq.question}</h3>
-                <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+              <div key={index} className={`card-professional p-5 sm:p-8 hover-lift fade-in stagger-${index + 1}`}>
+                <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-4">{faq.question}</h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -513,24 +513,24 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6 fade-in">Find Our Office</h2>
-            <p className="text-gray-600 fade-in stagger-2">
+      <section className="py-12 sm:py-16">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 fade-in">Find Our Office</h2>
+            <p className="text-sm sm:text-base text-gray-600 fade-in stagger-2">
               Visit us at our office in Dombivli (East), Thane for in-person consultations and project discussions.
             </p>
           </div>
           <div className="card-professional overflow-hidden hover-lift fade-in stagger-3">
             {!mapLoaded && (
-              <div className="h-96 bg-gray-200 flex items-center justify-center">
+              <div className="h-64 sm:h-96 bg-gray-200 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                  <p className="text-gray-500 text-lg">Loading map...</p>
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-gray-500 text-sm sm:text-lg">Loading map...</p>
                 </div>
               </div>
             )}
-            <div id="map" className="w-full h-[400px]" style={{ display: mapLoaded ? 'block' : 'none' }}></div>
+            <div id="map" className="w-full h-[300px] sm:h-[400px]" style={{ display: mapLoaded ? 'block' : 'none' }}></div>
           </div>
         </div>
       </section>

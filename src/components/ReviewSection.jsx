@@ -53,29 +53,29 @@ const ReviewSection = () => {
 
   return (
     <section className="section-padding bg-gray-50">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Share Your Experience</h2>
-            <p className="text-xl text-gray-600">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4">Share Your Experience</h2>
+            <p className="text-base sm:text-xl text-gray-600">
               We value your feedback. Help us improve our services by sharing your experience with Kalpak Insulation.
             </p>
           </div>
 
-          <div className="card-professional p-8">
+          <div className="card-professional p-5 sm:p-8">
             {isSubmitted ? (
-              <div className="text-center py-12">
+              <div className="text-center py-10 sm:py-12">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Thank You!</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Thank You!</h3>
                 <p className="text-gray-600">
-                  Your review has been submitted successfully. We appreciate your feedback!
+                  Your review has been submitted and is pending moderation. It will appear on our website once approved by our team.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
                       Full Name *
@@ -87,7 +87,7 @@ const ReviewSection = () => {
                       value={review.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors text-sm sm:text-base"
                       placeholder="Your full name"
                     />
                   </div>
@@ -102,10 +102,25 @@ const ReviewSection = () => {
                       value={review.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors text-sm sm:text-base"
                       placeholder="your.email@example.com"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Company / Organization
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={review.company}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors text-sm sm:text-base"
+                    placeholder="Your company name (optional)"
+                  />
                 </div>
 
                 <div>
@@ -121,7 +136,7 @@ const ReviewSection = () => {
                         className="focus:outline-none"
                       >
                         <Star
-                          size={32}
+                          size={28}
                           className={`transition-colors ${
                             star <= (hoverRating || rating) ? "text-yellow-400 fill-current" : "text-gray-300"
                           }`}
@@ -141,8 +156,8 @@ const ReviewSection = () => {
                     value={review.message}
                     onChange={handleChange}
                     required
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
+                    rows={5}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none text-sm sm:text-base"
                     placeholder="Share your experience with our services..."
                   />
                 </div>

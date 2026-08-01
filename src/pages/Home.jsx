@@ -76,15 +76,15 @@ const Home = () => {
 
       {/* Services Section */}
       <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Our Professional Services</h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">Our Professional Services</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               {homepageContent?.servicesDescription || "We provide comprehensive insulation and scaffolding solutions for industrial, commercial, and residential projects across Maharashtra."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {services.map((service, index) => (
               <div key={service.id} className="card-professional p-8 h-full">
                 <div className="w-16 h-16 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
@@ -120,15 +120,15 @@ const Home = () => {
 
       {/* Why Choose Us */}
       <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">Why Choose Kalpak Insulation?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">Why Choose Kalpak Insulation?</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto">
               {homepageContent?.whyChooseUsDescription || "With years of experience and a commitment to excellence, we deliver superior insulation solutions that meet your specific needs."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             {whyChooseUs.map((item) => (
               <div key={item.id} className="text-center">
                 <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -149,22 +149,22 @@ const Home = () => {
 
       {/* Featured Projects */}
       <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">Featured Projects</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">Featured Projects</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto">
               {homepageContent?.projectsDescription || "Explore some of our recent successful projects across different industries and applications."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {featuredProjects.map((project) => (
               <div key={project.id} className="card-professional overflow-hidden">
                 <div className="relative">
                   <img
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-48 sm:h-64 object-cover"
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-primary-600 text-white rounded-full text-sm font-semibold">
@@ -204,15 +204,15 @@ const Home = () => {
 
       {/* Testimonials */}
       <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">What Our Clients Say</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 sm:mb-6">What Our Clients Say</h2>
+            <p className="text-base sm:text-xl text-gray-600 max-w-3xl mx-auto">
               {homepageContent?.testimonialsDescription || "Don't just take our word for it. Here's what our satisfied clients have to say about our services."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="card-professional p-8">
                 <div className="flex mb-6">
@@ -253,14 +253,14 @@ const Home = () => {
 
       {/* CTA Section */}
       <section className="gradient-primary text-white section-padding">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Start Your Project?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto opacity-90 leading-relaxed">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6">Ready to Start Your Project?</h2>
+          <p className="text-base sm:text-xl mb-6 sm:mb-8 max-w-3xl mx-auto opacity-90 leading-relaxed">
             Get in touch with our experts today for a free consultation and quote. We're here to help you with all your
             insulation and scaffolding needs.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
             <Link to="/contact" className="btn-secondary bg-white text-primary-600 hover:bg-gray-100">
               Get Free Quote
             </Link>

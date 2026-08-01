@@ -33,11 +33,11 @@ const Navbar = () => {
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-center">
             {/* Logo Section */}
-            <Link to="/" className="flex items-center space-x-4 group">
+            <Link to="/" className="flex items-center space-x-3 sm:space-x-4 group">
               <Logo size="default" />
-              <div className="hidden sm:block">
-                <h1 className="text-2xl font-bold text-gray-800">KALPAK INSULATION</h1>
-                <p className="text-sm text-gray-600 font-medium">Professional Insulation Solutions</p>
+              <div>
+                <h1 className="text-lg sm:text-2xl font-bold text-gray-800 leading-tight">KALPAK INSULATION</h1>
+                <p className="text-xs sm:text-sm text-gray-600 font-medium hidden xs:block">Professional Insulation Solutions</p>
               </div>
             </Link>
 
@@ -77,41 +77,41 @@ const Navbar = () => {
                 {showAuthMenu && (
                   <div className="absolute right-0 mt-3 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                     {user ? (
-                      <div className="space-y-3">
+                      <div className="space-y-1">
                         <Link
                           to="/admin/dashboard"
-                          className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-amber-700 font-semibold"
+                          className="w-full px-4 py-2.5 text-left hover:bg-amber-50 transition-colors flex items-center space-x-3 text-amber-700 font-semibold text-sm"
                           onClick={() => setShowAuthMenu(false)}
                         >
                           <span>Admin Dashboard</span>
                         </Link>
-                        {user && (
-                          <button
-                            onClick={handleLogout}
-                            className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-gray-700"
-                          >
-                            <span>Logout</span>
-                          </button>
-                        )}
+                        <button
+                          onClick={() => { setShowAuthMenu(false); handleLogout(); }}
+                          className="w-full px-4 py-2.5 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-gray-700 text-sm"
+                        >
+                          <span>Logout</span>
+                        </button>
                       </div>
                     ) : (
-                      <div className="space-y-3">
+                      <div className="space-y-1">
                         <Link
                           to="/admin/dashboard"
-                          className="w-full px-4 py-3 text-left hover:bg-amber-50 transition-colors flex items-center space-x-3 text-amber-700 font-semibold"
+                          className="w-full px-4 py-2.5 text-left hover:bg-amber-50 transition-colors flex items-center space-x-3 text-amber-700 font-semibold text-sm"
                           onClick={() => setShowAuthMenu(false)}
                         >
                           <span>Admin Dashboard</span>
                         </Link>
                         <Link
                           to="/login"
-                          className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-gray-700"
+                          className="w-full px-4 py-2.5 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-gray-700 text-sm"
+                          onClick={() => setShowAuthMenu(false)}
                         >
                           <span>Login</span>
                         </Link>
                         <Link
                           to="/signup"
-                          className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-gray-700"
+                          className="w-full px-4 py-2.5 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 text-gray-700 text-sm"
+                          onClick={() => setShowAuthMenu(false)}
                         >
                           <span>Sign Up</span>
                         </Link>
@@ -137,13 +137,13 @@ const Navbar = () => {
 
           {/* Mobile Navigation */}
           {isOpen && (
-            <div className="lg:hidden mt-6 pb-6">
-              <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-6 space-y-4">
+            <div className="lg:hidden mt-4 pb-4">
+              <div className="bg-white rounded-lg shadow-xl border border-gray-200 p-5 space-y-3">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`block font-semibold py-3 px-4 rounded-lg transition-all duration-300 ${
+                    className={`block font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 text-sm ${
                       location.pathname === link.path
                         ? "bg-primary-600 text-white"
                         : "text-gray-700 hover:bg-gray-50 hover:text-primary-600"
@@ -154,36 +154,34 @@ const Navbar = () => {
                   </Link>
                 ))}
 
-                <div className="pt-4 border-t border-gray-200 space-y-3">
+                <div className="pt-3 border-t border-gray-200 space-y-2">
+                  <Link
+                    to="/admin/dashboard"
+                    className="block font-semibold py-2.5 px-4 rounded-lg text-amber-700 hover:bg-amber-50 text-sm"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Admin Dashboard
+                  </Link>
                   {user ? (
-                    <div className="flex items-center gap-4">
-                      {isAdmin && (
-                        <Link
-                          to="/admin/dashboard"
-                          className="text-gray-700 hover:text-red-600 transition-colors"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          Admin Dashboard
-                        </Link>
-                      )}
-                      <button
-                        onClick={handleLogout}
-                        className="text-gray-700 hover:text-red-600 transition-colors"
-                      >
-                        Logout
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => { setIsOpen(false); handleLogout(); }}
+                      className="block w-full text-left font-semibold py-2.5 px-4 rounded-lg text-gray-700 hover:bg-gray-50 text-sm"
+                    >
+                      Logout
+                    </button>
                   ) : (
-                    <div className="flex items-center gap-4">
+                    <div className="grid grid-cols-2 gap-2 pt-1">
                       <Link
                         to="/login"
-                        className="text-gray-700 hover:text-red-600 transition-colors"
+                        className="text-center font-semibold py-2 px-4 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm"
+                        onClick={() => setIsOpen(false)}
                       >
                         Login
                       </Link>
                       <Link
                         to="/signup"
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                        className="text-center font-semibold py-2 px-4 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm"
+                        onClick={() => setIsOpen(false)}
                       >
                         Sign Up
                       </Link>
@@ -191,7 +189,7 @@ const Navbar = () => {
                   )}
                 </div>
 
-                <Link to="/contact" className="block btn-primary text-center mt-4" onClick={() => setIsOpen(false)}>
+                <Link to="/contact" className="block btn-primary text-center mt-3 text-sm py-2.5" onClick={() => setIsOpen(false)}>
                   Get Quote
                 </Link>
               </div>
