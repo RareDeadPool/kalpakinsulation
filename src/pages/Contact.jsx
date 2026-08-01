@@ -90,7 +90,8 @@ const Contact = () => {
     setIsLoading(true)
     try {
       // Send data to Formspree for main email to kalpakinsulation@gmail.com
-      const formspreeResponse = await fetch('https://formspree.io/f/xblyojgz', {
+      const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/xblyojgz';
+      const formspreeResponse = await fetch(formspreeEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,13 +108,14 @@ const Contact = () => {
         from_name: "Kalpak Insulation",
         to_name: formData.name,
         to_email: formData.email,
-        // You can break down formData here into individual fields for the EmailJS template if needed
-        // Example: name: formData.name, email: formData.email, etc.
-        // For now, sending all details in a single message string:
         message: `Thank you for your inquiry! We received your message and will get back to you within 24 hours.\n\nYour details:\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nCompany: ${formData.company || 'N/A'}\nService: ${formData.service || 'N/A'}\nMessage: ${formData.message}`
       };
 
-      await emailjs.send('service_kby4qxt', 'template_zyexre3', templateParams, 'BNdzUFn5tWGrFMXPJ');
+      const emailjsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_kby4qxt';
+      const emailjsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_zyexre3';
+      const emailjsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'BNdzUFn5tWGrFMXPJ';
+
+      await emailjs.send(emailjsServiceId, emailjsTemplateId, templateParams, emailjsPublicKey);
 
       setIsSubmitted(true)
       toast.success("Message sent successfully!")

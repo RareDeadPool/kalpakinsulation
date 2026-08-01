@@ -297,10 +297,10 @@ export const getVisitorStats = async () => {
 export const getCertificateByCode = async (code) => {
   try {
     if (!code) return null;
-    const cleanCode = code.trim();
+    const cleanCode = decodeURIComponent(code).trim();
     const certsRef = collection(db, "certificates");
     
-    // First query by certificateCode field
+    // 1. First query by certificateCode field (exact match)
     const q = query(certsRef, where("certificateCode", "==", cleanCode));
     const querySnapshot = await getDocs(q);
 
@@ -309,7 +309,7 @@ export const getCertificateByCode = async (code) => {
       return { id: certDoc.id, ...certDoc.data() };
     }
 
-    // Try uppercase code matching if initial exact match didn't find result
+    // 2. Try uppercase code matching
     const qUpper = query(certsRef, where("certificateCode", "==", cleanCode.toUpperCase()));
     const upperSnapshot = await getDocs(qUpper);
     if (!upperSnapshot.empty) {
@@ -317,11 +317,31 @@ export const getCertificateByCode = async (code) => {
       return { id: certDoc.id, ...certDoc.data() };
     }
 
-    // Try checking if document ID matches code
+    // 3. Try lowercase code matching
+    const qLower = query(certsRef, where("certificateCode", "==", cleanCode.toLowerCase()));
+    const lowerSnapshot = await getDocs(qLower);
+    if (!lowerSnapshot.empty) {
+      const certDoc = lowerSnapshot.docs[0];
+      return { id: certDoc.id, ...certDoc.data() };
+    }
+
+    // 4. Try checking if document ID matches code
     const docRef = doc(db, "certificates", cleanCode);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return { id: docSnap.id, ...docSnap.data() };
+    }
+
+    // 5. Fallback scan: retrieve all certificates and match normalized code (alphanumeric uppercase)
+    const allSnapshot = await getDocs(certsRef);
+    const normalizedSearch = cleanCode.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+    for (const docItem of allSnapshot.docs) {
+      const data = docItem.data();
+      const codeVal = (data.certificateCode || docItem.id || "").toString();
+      const normalizedCode = codeVal.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+      if (normalizedCode === normalizedSearch) {
+        return { id: docItem.id, ...data };
+      }
     }
 
     return null;

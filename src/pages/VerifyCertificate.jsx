@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   ShieldCheck,
   Award,
@@ -18,19 +18,25 @@ import Logo from "../components/Logo";
 
 const VerifyCertificate = () => {
   const { code: urlCode } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const [inputCode, setInputCode] = useState(urlCode || "");
+  // Extract code from URL path or query params (?code=XXX or ?id=XXX)
+  const queryParams = new URLSearchParams(location.search);
+  const activeCode = urlCode || queryParams.get("code") || queryParams.get("id") || "";
+
+  const [inputCode, setInputCode] = useState(activeCode);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [certificate, setCertificate] = useState(null);
 
   useEffect(() => {
-    if (urlCode) {
-      setInputCode(urlCode);
-      handleSearch(urlCode);
+    if (activeCode) {
+      const clean = decodeURIComponent(activeCode).trim();
+      setInputCode(clean);
+      handleSearch(clean);
     }
-  }, [urlCode]);
+  }, [activeCode, location.search]);
 
   const handleSearch = async (codeToSearch) => {
     const searchVal = codeToSearch || inputCode;
@@ -56,14 +62,16 @@ const VerifyCertificate = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (inputCode.trim()) {
-      navigate(`/verify-certificate/${inputCode.trim().toUpperCase()}`);
+      navigate(`/verify-certificate/${encodeURIComponent(inputCode.trim().toUpperCase())}`);
     }
   };
 
   const handleCopyLink = () => {
-    const url = `${window.location.origin}/verify-certificate/${certificate?.certificateCode || inputCode.trim()}`;
+    const targetCode = (certificate?.certificateCode || inputCode || "").trim();
+    if (!targetCode) return;
+    const url = `${window.location.origin}/verify-certificate/${encodeURIComponent(targetCode)}`;
     navigator.clipboard.writeText(url);
-    toast.info("Verification link copied!");
+    toast.info("Verification link copied to clipboard!");
   };
 
   /* ── Helpers ── */

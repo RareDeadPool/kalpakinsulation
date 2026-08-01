@@ -296,7 +296,8 @@ const AdminDashboard = () => {
   };
 
   const handleCopyLink = (code) => {
-    const url = `${window.location.origin}/verify-certificate/${code}`;
+    const cleanCode = encodeURIComponent((code || "").trim());
+    const url = `${window.location.origin}/verify-certificate/${cleanCode}`;
     navigator.clipboard.writeText(url);
     toast.info(`Verification link for ${code} copied!`);
   };
